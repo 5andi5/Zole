@@ -1,0 +1,15 @@
+﻿@{
+    PageData["title"] = "Spēle...";
+}
+
+<div class="pull-left opponent-deck">
+    <span app-card-icon="{{card.code}}" ng-repeat="card in player1.cards" />
+</div>
+
+<div class="pull-right opponent-deck">
+    <span ng-repeat="card in player2.cards" app-card-icon="{{card.code}}" />
+</div>
+
+<div class="my-deck">
+    <span ng-repeat="card in me.cards" app-card-icon="{{card.code}}" />
+</div>
