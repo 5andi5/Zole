@@ -4,13 +4,23 @@
 // In this case it is a simple value service.
 angular.module('app.services', [])
 
-    .value('version', '0.1');
 
-    //.factory('userService', function () {
-    //    return {
-    //        addUserInfo: function addUserInfo(url) {
-    //            var userName = $('#userSelect').val();
-    //            return url + '?user=' + userName;
-    //        }
-    //    };
-    //})
+    .factory('userService', function () {
+        var getUserName= function getUserName() {
+            return document.cookie.split('=')[1];
+        };
+        return {
+            logIn: function logIn(username) {
+                document.cookie = 'u=' + username;
+            },
+            logOut: function logOut() {
+                document.cookie = 'u=';
+            },
+            getUserName: getUserName,
+            isLoggedIn: function isLoggedIn() {
+                return !!getUserName();
+            }
+        };
+    })
+
+    .value('version', '0.1');

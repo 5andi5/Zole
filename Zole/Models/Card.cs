@@ -14,6 +14,7 @@ namespace App.Zole.Models
         public Card(string code)
         {
             this.Code = code;
+            this.Owner = CardOwner.TableNow;
         }
 
         public void ChangeOwner(CardOwner owner)

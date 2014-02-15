@@ -11,56 +11,67 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using App.Zole.ApiModels;
 using AutoMapper;
+using MongoDB.Bson;
 
 namespace App.Zole.ApiControllers
 {
     public class GameController : ApiController
     {
         // /api/Game/Games
-        public IEnumerable<ApiGame> GetGames()
+        [HttpGet]
+        public IEnumerable<ApiGame> Games()
         {
             var repository = new GameRepository();
             List<Game> games = repository.GetGames();
 
-            if (games.Count == 0)
-            {
-                CreateTestData(repository);
-            }
+            //if (games.Count == 0)
+            //{
+            //    CreateTestData(repository);
+            //}
 
             return Mapper.Map<List<ApiGame>>(games);
         }
 
-        private void CreateTestData(GameRepository repository)
-        {
-            var game = new Game(GameStatus.Gathering);
-            repository.Create(game);
+        //private void CreateTestData(GameRepository repository)
+        //{
+        //    var game = new Game(GameStatus.Gathering);
+        //    repository.Create(game);
 
-            game = new Game(GameStatus.Playing);
+        //    game = new Game(GameStatus.Playing);
+        //    repository.Create(game);
+        //    //var user1 = new User { Name = "chick" };
+        //    //var user2 = new User { Name = "boom" };
+        //    //var user3 = new User { Name = "raw" };
+        //    //return new List<Game>{
+        //    //    new Game{
+        //    //        Id=1,
+        //    //        Status=GameStatus.Completed,
+        //    //        Players=new List<User>{user1, user2, user3}
+        //    //    },
+        //    //    new Game{
+        //    //        Id=2,
+        //    //        Status=GameStatus.Gathering,
+        //    //        Players=new List<User>{user3}
+        //    //    },
+        //    //    new Game{
+        //    //        Id=3,
+        //    //        Status=GameStatus.Playing,
+        //    //        Players=new List<User>{user3, user2, user1}
+        //    //    }
+        //    //};
+        //}
+
+        public ObjectId Create()
+        {
+            string user = GetUser();
+            var repository = new GameRepository();
+            Game game = new Game(user);
             repository.Create(game);
-            //var user1 = new User { Name = "chick" };
-            //var user2 = new User { Name = "boom" };
-            //var user3 = new User { Name = "raw" };
-            //return new List<Game>{
-            //    new Game{
-            //        Id=1,
-            //        Status=GameStatus.Completed,
-            //        Players=new List<User>{user1, user2, user3}
-            //    },
-            //    new Game{
-            //        Id=2,
-            //        Status=GameStatus.Gathering,
-            //        Players=new List<User>{user3}
-            //    },
-            //    new Game{
-            //        Id=3,
-            //        Status=GameStatus.Playing,
-            //        Players=new List<User>{user3, user2, user1}
-            //    }
-            //};
+            return game.Id;
         }
 
-        [AcceptVerbs("PUT")]
-        public void PutJoinGame(GameIdParam parameter)
+        //[AcceptVerbs("PUT")]
+        public void Join(GameIdParam parameter)
         {
             Check.NotNull(parameter, "parameter");
             Check.NotNull(parameter.gameId, "parameter.gameId");
@@ -77,6 +88,12 @@ namespace App.Zole.ApiControllers
                 {
                     throw new InvalidStateException();
                 }
+                index++;
+            }
+
+            if (index == game.Players.Length - 1)
+            {
+                game.ChangeStatus(GameStatus.ChooseRole);
             }
 
             if (index == game.Players.Length)
@@ -85,6 +102,7 @@ namespace App.Zole.ApiControllers
             }
 
             game.Players[index] = new Player(user, PlayerRole.Unknown);
+
             repository.Save(game);
         }
 

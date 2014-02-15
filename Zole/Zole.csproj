@@ -531,6 +531,7 @@
     <Content Include="Views\_PageStart.cshtml" />
     <Content Include="Views\About.cshtml" />
     <Content Include="Views\Game.cshtml" />
+    <Content Include="Views\UserInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -550,6 +551,7 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Helpers\Check.cs" />
     <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\CardFactory.cs" />
     <Compile Include="Models\CardOwner.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="ApiControllers\GameController.cs" />

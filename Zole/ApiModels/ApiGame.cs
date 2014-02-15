@@ -11,5 +11,6 @@ namespace App.Zole.ApiModels
     {
         public ObjectId id { get; set; }
         public ApiPlayer[] players { get; set; }
+        public GameStatus status { get; set; }
     }
 }

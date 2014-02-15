@@ -4,21 +4,17 @@
 <h2>Spēles</h2>
 
 <script type="text/javascript">
-    function x(value){return value&&value.UserName;}
+    function x(value) { return value && value.UserName; }
 </script>
 <table class="table table-hover">
     <thead>
         <tr>
-            <th>Statuss</th>
             <th>Spēlētāji</th>
-            <th></th>
+            <th><input type="button" value="Jauna spēle" ng-click="createGame();" /></th>
         </tr>
     </thead>
     <tr ng-repeat="game in games">
-        <td>{{ game.Status }}</td>
-        <td>
-            {{ game | formatPlayers }}
-        </td>
-        <td><input type="button" value="Pieslēgties" ng-click="joinGame(game.id);" /></td>
+        <td>{{ game | formatPlayers }}</td>
+        <td><input type="button" value="Pieslēgties" ng-click="joinGame(game.id);" ng-disabled="game.status > 0" /></td>
     </tr>
 </table>

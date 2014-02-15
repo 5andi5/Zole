@@ -9,35 +9,62 @@ angular.module('app', ['ui.router', 'app.filters', 'app.services', 'app.directiv
 
         // UI States, URL Routing & Mapping. For more info see: https://github.com/angular-ui/ui-router
         // ------------------------------------------------------------------------------------------------------------
+        var userInfoView = {
+            templateUrl: '/views/userInfo',
+            controller: 'UserInfoCtrl'
+        };
 
         $stateProvider
             .state('gameList', {
                 url: '/',
-                templateUrl: '/views/index',
-                controller: 'GameListCtrl'
-
+                views: {
+                    'main': {
+                        templateUrl: '/views/index',
+                        controller: 'GameListCtrl',
+                    },
+                    'user-info': userInfoView
+                }
             })
             .state('game', {
                 url: '/{id:[0-9A-Fa-f]{24}}',
-                templateUrl: '/views/game',
-                controller: 'GameCtrl'
-
+                views: {
+                    'main': {
+                        templateUrl: '/views/game',
+                        controller: 'GameCtrl',
+                    },
+                    'user-info': userInfoView
+                }
             })
             .state('about', {
                 url: '/about',
-                templateUrl: '/views/about',
-                controller: 'AboutCtrl'
+                views: {
+                    'main': {
+                        templateUrl: '/views/about',
+                        controller: 'AboutCtrl',
+                    },
+                    'user-info': userInfoView
+                }
             })
             .state('login', {
                 url: '/login',
                 layout: 'basic',
-                templateUrl: '/views/login',
-                controller: 'LoginCtrl'
+                views: {
+                    'main': {
+                        templateUrl: '/views/login',
+                        controller: 'LoginCtrl'
+                    },
+                    'user-info': userInfoView
+                }
             })
             .state('otherwise', {
                 url: '*path',
-                templateUrl: '/views/404',
-                controller: 'Error404Ctrl'
+                views: {
+                    'main': {
+                        templateUrl: '/views/404',
+                        controller: 'Error404Ctrl'
+                    },
+                    'user-info': userInfoView
+                }
             });
 
         $locationProvider.html5Mode(true);

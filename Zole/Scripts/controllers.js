@@ -6,7 +6,7 @@
 angular.module('app.controllers', [])
 
     // Path: /
-    .controller('GameListCtrl', ['$scope', '$state', '$window', '$http', 
+    .controller('GameListCtrl', ['$scope', '$state', '$window', '$http',
         function ($scope, $state, $window, $http) {
             var errorHandler = function errorHandler(data, status, headers, config) {
                 console.error(data.ExceptionMessage);
@@ -18,14 +18,24 @@ angular.module('app.controllers', [])
             }).error(errorHandler);
 
             $scope.joinGame = function joinGame(gameId) {
-                $http.put('/api/Game/JoinGame', { gameId: gameId })
+                $http.post('/api/Game/Join', { gameId: gameId })
                     .success(function () {
                         $state.go('game', { id: gameId });
                     }).error(errorHandler);
             };
 
+            $scope.createGame = function createGame() {
+                $http.post('/api/Game/Create')
+                    .success(function (gameId) {
+                        if (gameId[0] === '"') {
+                            gameId = gameId.substring(1, gameId.length - 1);
+                        }
+                        $state.go('game', { id: gameId });
+                    }).error(errorHandler);
+            };
+
             window.$scope = $scope;
-    }])
+        }])
 
     .controller('GameCtrl', ['$scope', '$location', '$window', '$http', '$stateParams',
         function ($scope, $location, $window, $http, $stateParams) {
@@ -75,12 +85,22 @@ angular.module('app.controllers', [])
     }])
 
     // Path: /login
-    .controller('LoginCtrl', ['$scope', '$location', function ($scope, $location) {
-        $scope.$root.title = 'AngularJS SPA | Sign In';
-        // TODO: Authorize a user
+    .controller('LoginCtrl', ['$scope', '$state', 'userService', function ($scope, $state, userService) {
+        $scope.$root.title = 'AngularJS SPA | Log In';
         $scope.login = function () {
-            $location.path('/');
+            userService.logIn($scope.userName);
+            $state.go('gameList');
             return false;
+        };
+    }])
+
+    .controller('UserInfoCtrl', ['$scope', 'userService', function ($scope, userService) {
+        $scope.userName = userService.getUserName();
+        $scope.isSignedIn = userService.isLoggedIn();
+        $scope.logOut = function () {
+            userService.logOut();
+            $scope.userName = userService.getUserName();
+            $scope.isSignedIn = userService.isLoggedIn();
         };
     }])
 

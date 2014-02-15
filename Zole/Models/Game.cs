@@ -35,11 +35,20 @@ namespace App.Zole.Models
             this.Cards = cards;
         }
 
-        public Game(GameStatus status)
+        //public Game(GameStatus status)
+        //{
+        //    this.Status = status;
+        //    this.Players = new Player[3];
+        //    this.ActivePlayerIndex = 0;
+        //}
+
+        public Game(string userName)
         {
-            this.Status = status;
+            this.Status = GameStatus.Gathering;
             this.Players = new Player[3];
+            this.Players[0] = new Player(userName, PlayerRole.Unknown);
             this.ActivePlayerIndex = 0;
+            this.Cards = CardFactory.CreateAll();
         }
 
         internal Player AsActivePlayer(User user)

@@ -1,0 +1,7 @@
+﻿<a href="./login" ng-class="{hide: isSignedIn}" ng-disabled="isSignedIn">Log In</a>
+
+<span class="navbar-brand" ng-class="{hide: !isSignedIn}">
+    {{userName}}
+</span>
+<a class="navbar-brand" ng-class="{hide: !isSignedIn}" ng-disabled="!isSignedIn"
+   ng-click="logOut();" href="#">Log out</a>
