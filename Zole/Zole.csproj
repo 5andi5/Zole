@@ -541,6 +541,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiModels\GameIdParam.cs" />
+    <Compile Include="ApiModels\PlayerAction.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -555,9 +556,9 @@
     <Compile Include="Models\CardOwner.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="ApiControllers\GameController.cs" />
-    <Compile Include="Models\GameStates\ChooseRoleState.cs" />
-    <Compile Include="Models\GameStates\GameStateBase.cs" />
-    <Compile Include="Models\GameStates\GameStateFactory.cs" />
+    <Compile Include="Models\GameStates\ChooseRoleActions.cs" />
+    <Compile Include="Models\GameStates\GameActionsBase.cs" />
+    <Compile Include="Models\GameStates\GameActionsFactory.cs" />
     <Compile Include="Models\GameStatus.cs" />
     <Compile Include="Models\PlayerRole.cs" />
     <Compile Include="Models\Player.cs" />

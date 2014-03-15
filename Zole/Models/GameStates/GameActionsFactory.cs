@@ -5,18 +5,18 @@ using System.Web;
 
 namespace App.Zole.Models.GameStates
 {
-    public class GameStateFactory
+    public class GameActionsFactory
     {
-        private static Dictionary<string, Type> States =
-            new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase)
+        private static Dictionary<GameStatus, Type> States =
+            new Dictionary<GameStatus, Type>(StringComparer.OrdinalIgnoreCase)
         {
-            {"CR", typeof(ChooseRoleState)}
+            {"CR", typeof(ChooseRoleActions)}
         };
 
-        public static GameStateBase Create(string code, Game game)
+        public static GameActionsBase Create(string code, Game game)
         {
             Type type = States[code];
-            GameStateBase state = (GameStateBase)Activator.CreateInstance(type, game);
+            GameActionsBase state = (GameActionsBase)Activator.CreateInstance(type, game);
             return state;
         }
 

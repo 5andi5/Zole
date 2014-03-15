@@ -7,9 +7,9 @@ using App.Zole.Extensions;
 
 namespace App.Zole.Models.GameStates
 {
-    public class ChooseRoleState : GameStateBase
+    public class ChooseRoleActions : GameActionsBase
     {
-        public ChooseRoleState(Game game)
+        public ChooseRoleActions(Game game)
             : base(game)
         { }
 

@@ -86,7 +86,7 @@ namespace App.Zole.ApiControllers
             {
                 if (string.Equals(user, game.Players[index].UserName, StringComparison.OrdinalIgnoreCase))
                 {
-                    throw new InvalidStateException();
+                    return;
                 }
                 index++;
             }
@@ -114,6 +114,14 @@ namespace App.Zole.ApiControllers
             string userName = cookie[cookieName].Value;
             Check.NotNullOrEmpty(userName, "userName");
             return userName;
+        }
+
+        public string PlayerAction(GameIdParam parameter)
+        {
+            string user = GetUser();
+            var repository = new GameRepository();
+            Game game = repository.GetGame(parameter.gameId);
+            game.state
         }
     }
 }

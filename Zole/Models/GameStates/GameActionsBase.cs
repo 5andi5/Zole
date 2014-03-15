@@ -6,21 +6,21 @@ using System.Web;
 
 namespace App.Zole.Models.GameStates
 {
-    public abstract class GameStateBase
+    public abstract class GameActionsBase
     {
         protected Game Game { get; private set; }
 
         public string Code
         {
-            get { return GameStateFactory.GetCode(this.GetType()); }
+            get { return GameActionsFactory.GetCode(this.GetType()); }
         }
 
-        public GameStateBase(Game game)
+        public GameActionsBase(Game game)
         {
             this.Game = game;
         }
 
-        public virtual GameStateBase JoinGame(Player user)
+        public virtual GameActionsBase JoinGame(Player user)
         {
             throw new InvalidStateException();
         }

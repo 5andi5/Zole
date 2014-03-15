@@ -1,4 +1,5 @@
 ﻿using App.Zole.Exceptions;
+using App.Zole.Models.GameStates;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
@@ -24,6 +25,15 @@ namespace App.Zole.Models
 
         [BsonElement]
         public Card[] Cards { get; private set; }
+
+        [BsonIgnore]
+        public GameActionsBase Actions
+        {
+            get
+            {
+                return GameActionsFactory.Create(this);
+            }
+        }
 
         [BsonConstructor]
         public Game(ObjectId id, GameStatus status, Player[] players, int activePlayerIndex, Card[] cards)
